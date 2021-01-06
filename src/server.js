@@ -2,23 +2,23 @@ const express = require('express')
 const helmet = require('helmet')
 const port = process.env.PORT
 
-// express app
-const app = express()
+// express server
+const server = express()
 // listen for requests
-app.listen(port, () => {
+server.listen(port, () => {
 	console.log(`Server listening for port ${port}`)
 })
 
 // register view engine
-app.set('view engine', 'ejs')
+server.set('view engine', 'ejs')
 
 // middleware & static files
-app.use(express.static('public'))
+server.use(express.static('public'))
 
 // helmet
-app.use(helmet())
+server.use(helmet())
 
-app.use((req, res, next) => {
+server.use((req, res, next) => {
 	console.log('new request made:')
 	console.log('host: ', req.hostname)
 	console.log('path: ', req.path)
@@ -26,14 +26,14 @@ app.use((req, res, next) => {
 	next()
 })
 
-app.get('/', (req,res) => {
+server.get('/', (req,res) => {
 	const file = 'index'
 	res.render(file, {title: '', css:file, fileJS:file})
 })
 
-app.use(express.json())
+server.use(express.json())
 
 // 404 page
-app.use((req, res) => {
+server.use((req, res) => {
 	res.status(404).render('404', { title: '404' })
 })
