@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 
 app.get('/', (req,res) => {
 	const file = 'index'
-	res.render(file, {title: '', mainJS:file})
+	res.render(file, {title: '', css:file, fileJS:file})
 })
 
 app.use(express.json())
