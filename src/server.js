@@ -1,7 +1,6 @@
 const express = require('express')
 const helmet = require('helmet')
 const port = process.env.PORT
-const mysql = require("mysql")
 
 // express app
 const app = express()
