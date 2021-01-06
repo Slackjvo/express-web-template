@@ -1,1 +1,1 @@
-# Express Web Template with MySQL
+# Express Web Template with MySQL and EJS
