@@ -34,10 +34,7 @@ server.use(express.static('public'))
 server.use(helmet())
 
 server.use((req, res, next) => {
-	console.log('new request made:')
-	console.log('host: ', req.hostname)
-	console.log('path: ', req.path)
-	console.log('method: ', req.method)
+	console.log(`\nnew request made:\n`,`host: ${req.hostname}\n`,`path: ${req.path}\n`,`method: ${req.method}\n`)
 	next()
 })
 
