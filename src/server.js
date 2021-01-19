@@ -1,9 +1,24 @@
-const express = require('express')
-const helmet = require('helmet')
+import express from 'express'
+import helmet from 'helmet'
+import session from 'cookie-session'
 const port = process.env.PORT
 
 // express server
 const server = express()
+
+const expiryDate = new Date( Date.now() + 60 * 60 * 1000) // 1 hour
+server.use(session({
+  name: 'session',
+  keys: ['key1', 'key2'],
+  cookie: { secure: true,
+            httpOnly: true,
+            domain: 'example.com',
+            path: '/',
+            expires: expiryDate
+          }
+  })
+)
+
 // listen for requests
 server.listen(port, () => {
 	console.log(`Server listening for port ${port}`)
