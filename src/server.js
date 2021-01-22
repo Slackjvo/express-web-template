@@ -2,9 +2,29 @@ import express from 'express'
 import helmet from 'helmet'
 import session from 'cookie-session'
 const port = process.env.PORT
+import mCache from 'memory-cache'
 
 // express server
 const server = express()
+
+//Cache Middleware, duration is in seconds
+const cache = (duration) => {
+	return (req, res, next) => {
+		const key = '__express__' + req.originalUrl || req.url
+		const cachedBody = mCache.get(key)
+		if (cachedBody) {
+			res.send(cachedBody)
+			return
+		}else{
+			res.sendResponse = res.send
+			res.send = (body) => {
+				mCache.put(key, body, duration * 1000);
+				res.sendResponse(body)
+			}
+			next()
+		}
+	}
+}
 
 const expiryDate = new Date( Date.now() + 60 * 60 * 1000) // 1 hour
 server.use(session({
