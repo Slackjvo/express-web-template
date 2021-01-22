@@ -60,7 +60,7 @@ server.use((req, res, next) => {
 
 server.get('/', (req,res) => {
 	const file = 'index'
-	res.render(file, {title: '', css:file, fileJS:file})
+	res.render(file, {title: '', css:file, js:file})
 })
 
 server.use(express.json())
