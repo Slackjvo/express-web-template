@@ -1,8 +1,9 @@
 import express from 'express'
 import helmet from 'helmet'
 import session from 'cookie-session'
-const port = process.env.PORT
 import mCache from 'memory-cache'
+
+const port = process.env.PORT
 
 // express server
 const server = express()
@@ -51,7 +52,16 @@ server.set('view engine', 'ejs')
 server.use(express.static('public'))
 
 // helmet
-server.use(helmet())
+server.use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+		"img-src": ["'self'", "https: data:"],
+		"default-src": ["'self'", "https: data:"],
+		"script-src": ["'self'", "https: data: 'unsafe-inline'"]
+      },
+    },
+}))
 
 server.use((req, res, next) => {
 	console.log(`\nnew request made:\n`,`host: ${req.hostname}\n`,`path: ${req.path}\n`,`method: ${req.method}\n`)
